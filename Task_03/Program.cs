@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TaskThree
 {
@@ -22,27 +23,19 @@ namespace TaskThree
     {
         static void Main(string[] args)
         {
-            var type = ActionType.Read;
-
-            switch (type)
+            Dictionary<ActionType, Delegate> ActionMapping = new Dictionary<ActionType, Delegate>()
             {
-                case ActionType.Create:
-                    CreateMethod(type);
-                    break;
-                case ActionType.Read:
-                    ReadMethod(type);
-                    break;
-                case ActionType.Update:
-                    UpdateMethod(type);
-                    break;
-                case ActionType.Delete:
-                    DeleteMethod(type);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+                { ActionType.Create, new Action<ActionType>(CreateMethod) },
+                { ActionType.Read, new Action<ActionType>(ReadMethod) },
+                { ActionType.Update, new Action<ActionType>(UpdateMethod) },
+                { ActionType.Delete, new Action<ActionType>(DeleteMethod) }
+            };
+
+            var type = ActionType.Read;
+            ActionMapping[type].DynamicInvoke(type);
         }
 
+        //!!! duplications below - ActionType is input parameter and ActionType can be inferred from function names. Probably we need 1 function with switch-case instead of 4  or just remove parameters
         private static void CreateMethod(ActionType type)
         {
             Console.WriteLine(type.ToString());
