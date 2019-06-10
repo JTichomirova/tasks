@@ -10,6 +10,14 @@ namespace TaskOne
     ///
     /// задачу необходимо реализовать, дописав код, чтобы data.GetDigits() стал работоспособным
 
+    public static class MyExtensions
+    {
+        public static int[] GetDigits(this String str)
+        {
+            return str.Where(a => int.TryParse(a.ToString(), out int res)).Select(c => int.Parse(c.ToString())).ToArray();
+        }
+    }
+
     class Program
     {  
 
@@ -23,15 +31,25 @@ namespace TaskOne
 
         static void Main(string[] args)
         {
-            string data = RandomString(5);
-            byte summary = 0;
+            int strLength = 5;
 
-            foreach (byte digit in data.GetDigits())
+            if (strLength < Int32.MaxValue / 9)
             {
-                summary += digit;
+                string data = RandomString(strLength);
+                int summary = 0; // byte summary = 0; 
+                                 // Type Byte is not CLS-Compliant, so can't be used in LINQ and makes this code not available for distribution like a library for use with other CLS-compliant languages
+                                 // Byte.MaxValue = 255, so for this task strLength can't be more than 28, but probably someone would like to set it more than 28. 
+                                 // For int strLength can be 238609293, looks enough, probably even check (if clause) is redundant
+
+                summary = data.GetDigits().Sum();
+
+                Console.WriteLine($"{data} => {summary}");
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException();
             }
 
-            Console.WriteLine($"{data} => {summary}");
         }
     }
 }
