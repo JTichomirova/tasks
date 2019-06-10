@@ -15,6 +15,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using Task_web.Models;
+using Microsoft.EntityFrameworkCore;
+using Task_web.DAL;
 
 namespace Task_web
 {
@@ -30,6 +32,10 @@ namespace Task_web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddDbContext<MyContext>(op => op.UseSqlServer(Configuration["ConnectionString:task_webDB"]));
+
+            services.AddScoped<IMyRepository<TestModel>, MyRepository>();
 
             services.AddSingleton<IList<TestModel>>(new List<TestModel>());
 
