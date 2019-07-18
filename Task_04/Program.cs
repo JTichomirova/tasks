@@ -25,7 +25,7 @@ namespace Task_04
             {
 
                 Console.WriteLine((wakeUp - value).ToString(@"dd\.hh\:mm\:ss"));
-                Thread.Sleep(1000);
+                Thread.Sleep(1000); 
             }
         }
     }

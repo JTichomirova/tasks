@@ -4,52 +4,48 @@ namespace TaskTwo
 {
 
 
-    /// Есть базовый класс с реалиазцией двух интерфейсов, имеющих одинаковый метод
-    /// строка var @base = new Base(); - создаёт объект типа Base
-    /// вызов @base.WriteExecutor()    - выводит на экран строку I base Executor!
-    ///
-    /// Дополните код так, чтобы не создавая новый объект на экран было выведено
-    ///
-    /// I base Executor!
-    /// I one Executor!
-    /// I two Executor!
-
-    interface IOneExecutor
+    public class A
     {
-        void WriteExecutor();
-    }
+        public A()
+        {
+            Console.WriteLine("static A:A()");
+        }
 
-    interface ITwoExecutor
-    {
-        void WriteExecutor();
-    }
+        private static int InitX()
+        {
+            Console.WriteLine("A.InitX()");
+            return 1;
+        }
+        private static int InitY()
+        {
+            Console.WriteLine("A.InitY()");
+            return 2;
+        }
+        private static int InitA()
+        {
+            Console.WriteLine("A.InitA()");
+            return 3;
+        }
+        private static int InitB()
+        {
+            Console.WriteLine("A.InitB()");
+            return 4;
+        }
 
-    class Base : IOneExecutor, ITwoExecutor
-    {
-        void IOneExecutor.WriteExecutor()
-        {
-            Console.WriteLine("I one Executor!");
-        }
-        void ITwoExecutor.WriteExecutor()
-        {
-            Console.WriteLine("I two Executor!");
-        }
-        public void WriteExecutor()
-        {
-            Console.WriteLine("I base Executor!");
-        }
+        private int y = InitY();
+        private int x = InitX();
+
+        private static int a = InitA();
+        private static int b = InitB();
     }
 
     
 
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
-            var @base = new Base();
-            @base.WriteExecutor();
-            ((IOneExecutor)@base).WriteExecutor();
-            ((ITwoExecutor)@base).WriteExecutor();
+            A ck = new A();
 
         }
     }
